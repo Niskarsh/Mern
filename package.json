@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Niskarsh/Mern/issues"
   },
-  "homepage": "https://github.com/Niskarsh/Mern#readme"
+  "homepage": "https://github.com/Niskarsh/Mern#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
