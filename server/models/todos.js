@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var todo = mongoose.model("todo",{
+var todos = mongoose.model("todo",{
     task:{
         type:String,
         required : true,
@@ -15,11 +15,11 @@ var todo = mongoose.model("todo",{
 
     },
     priority:{
-        type:integer,
+        type : Number,
         required : true,
         trim : true,
 
     }
 });
 
-module.exports = {todo};
+module.exports = {todos};
