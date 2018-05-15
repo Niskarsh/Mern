@@ -4,7 +4,8 @@ var {users} = require("./models/users");
 const hbs = require("hbs");
 var express = require("express");
 var app = express();
-var $= require("jquery");
+var $ = require("jquery");
+
 
 // Handlebars viewing engine
 app.set('view engine', 'hbs');
@@ -16,41 +17,35 @@ app.use(bodyparser.urlencoded({
   }));
 // POST requests
 app.post("/signin",(req,res)=>{
-    console.log("Post is on")
-    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    // console.log(req.body)
-    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    
-    
-    users.findOne({"username" : req.body.username}).then((user)=>{
-        // console.log(user.username);
-        if(user.password===req.body.password){
-            // console.log("Final");
-            var u="/user/"+user.username;
-            console.log(u);
-            // console.log("jQuery working " +$("#username").get("0").value);
-            $.get(u);
-            // $.get(u,{},(data)=>{
-            //     console.log("get firing "+data);
-            // });
-            //res.render("user_page.hbs",{ name:user.username});
+    users.findOne({"username" : (req.body.username).toString()}).then(function(user){
+        if(!(user===null)){
+            if(user.password===req.body.password){
+                var u = "/user/"+user.username;       
+                return res.redirect(u);
+            }
+            alert("Incorrect password");
+
+        }else{
+            alert("User not registered");
         }
-    }).catch(e=>(e)=>{
-        res.send(res.render(e));
-})
+        
+    },(err)=>{
+        console.log(err);
+    });
+   
 });
 
 
 app.post("/signup",(req,res)=>{
+    console.log("Post fired");
     var user = new users({
         username: req.body.username,
         password: req.body.password
     });
+    console.log(user);
     user.save().then((doc)=>{
-        res.render("signin.hbs");
-    },(e)=>{
-        res.send(e);
-    });
+
+    }).catch (e=> console.log(e));
     
 });
 // GET Requests
@@ -76,6 +71,6 @@ app.get("/user/:user",(req,res)=>{
 
 
 
-app.listen(3001,()=>{
+app.listen(3000,()=>{
     console.log("Started listening");
 });
