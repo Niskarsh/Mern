@@ -4,26 +4,40 @@ var {users} = require("./models/users");
 const hbs = require("hbs");
 var express = require("express");
 var app = express();
+var $= require("jquery");
 
 // Handlebars viewing engine
 app.set('view engine', 'hbs');
+app.use(express.static(__dirname +"/../public"));
 var bodyparser = require("body-parser");
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({
+    extended: true
+  }));
 // POST requests
 app.post("/signin",(req,res)=>{
+    console.log("Post is on")
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    // console.log(req.body)
+    // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
     
-    users.find({"username" : req.body.username}).then((user)=>{
-        console.log(user[0].username);
-        if(user[0].password===req.body.password){
-            return res.render("user_page.hbs",{
-                name : user[0].username});
+    
+    users.findOne({"username" : req.body.username}).then((user)=>{
+        // console.log(user.username);
+        if(user.password===req.body.password){
+            // console.log("Final");
+            var u="/user/"+user.username;
+            console.log(u);
+            // console.log("jQuery working " +$("#username").get("0").value);
+            $.get(u);
+            // $.get(u,{},(data)=>{
+            //     console.log("get firing "+data);
+            // });
+            //res.render("user_page.hbs",{ name:user.username});
         }
-
-
-    },(e)=>{
+    }).catch(e=>(e)=>{
         res.send(res.render(e));
-
-    });
+})
 });
 
 
@@ -52,6 +66,16 @@ app.get("/signup",(req,res)=>{
     res.render("signup.hbs");
 });
 
-app.listen(4001,()=>{
+app.get("/user/:user",(req,res)=>{
+    console.log("Get fired user "+req.params.user);
+    res.render("user_page.hbs",{
+    name : req.params.user
+    });
+});
+``
+
+
+
+app.listen(3001,()=>{
     console.log("Started listening");
 });
