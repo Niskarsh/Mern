@@ -1,68 +1,26 @@
 var {mongoose} = require("./mongoose");
 var {todos} = require("./models/todos");
 var {users} = require("./models/users");
-const hbs = require("hbs");
-var express = require("express");
-var app = express();
+var signinPost = require("./routes/signin_post.js");
+var signupPost = require("./routes/signup_post.js");
+var addTodoPost = require("./routes/addTodo_post.js");
+var app = require("./common.js");
 
-
-
-// Handlebars viewing engine
-app.set('view engine', 'hbs');
-app.use(express.static(__dirname +"/../public"));
-var bodyparser = require("body-parser");
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({
-    extended: true
-  }));
-// POST requests
 app.post("/signin",(req,res)=>{
-    users.findOne({"username" : (req.body.username).toString()}).then(function(user){
-        if(!(user===null)){
-            if(user.password===req.body.password){
-                var u = "/user/"+user.username; 
-                console.log(u);      
-                return res.redirect(u);
-            }
-            alert("Incorrect password");
-
-        }else{
-            alert("User not registered");
-        }
-        
-    },(err)=>{
-        console.log(err);
-    });
-   
+    signinPost(req.body.username,req.body.password,res);   
 });
 
 
 app.post("/signup",(req,res)=>{
-    console.log("Post fired");
-    var user = new users({
-        username: req.body.username,
-        password: req.body.password
-    });
-    console.log(user);
-    user.save().then((doc)=>{
-
-    }).catch (e=> console.log(e));
-    
+    signupPost(req.body.username,req.body.password,res);   
 });
 
 
 app.post("/user/:user/add",(req,res)=>{
-    console.log("In weird post");
-    var todo= new todos({
-        task:req.body.task,
-        completeStatus: req.body.cstatus,
-        priority: req.body.p
-
-    });
-    todo.save().then((doc)=>{
-        res.redirect("/user/"+req.params.user);
-    },()=>{}).catch();
+    addTodoPost(req.params.user, req.body.task, req.body.cstatus, req.body.p,res);
 });
+
+
 // GET Requests
 app.get('/', function (req, res) {
     res.render('home.hbs');
@@ -77,9 +35,6 @@ app.get("/signup",(req,res)=>{
 });
 
 app.get("/user/:user",(req,res)=>{
-    // if(req.params.user==="Niskarsh"){
-    //     return;
-    // }
     console.log("Get fired user "+req.params.user);
     res.render("user_page.hbs",{
     name : req.params.user

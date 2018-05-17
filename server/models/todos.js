@@ -20,9 +20,9 @@ var todos = mongoose.model("todo",{
         trim : true,
 
     },
-    user:{
-        type:String
-    }
+    // user:{
+    //     type:String
+    // }
 });
 
 module.exports = {todos};
