@@ -19,6 +19,9 @@ var todos = mongoose.model("todo",{
         required : true,
         trim : true,
 
+    },
+    user:{
+        type:String
     }
 });
 

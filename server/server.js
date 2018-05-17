@@ -49,6 +49,20 @@ app.post("/signup",(req,res)=>{
     }).catch (e=> console.log(e));
     
 });
+
+
+app.post("/user/:user/add",(req,res)=>{
+    console.log("In weird post");
+    var todo= new todos({
+        task:req.body.task,
+        completeStatus: req.body.cstatus,
+        priority: req.body.p
+
+    });
+    todo.save().then((doc)=>{
+        res.redirect("/user/"+req.params.user);
+    },()=>{}).catch();
+});
 // GET Requests
 app.get('/', function (req, res) {
     res.render('home.hbs');
@@ -74,6 +88,12 @@ app.get("/user/:user",(req,res)=>{
 
 app.get("/user/:user/add",(req,res)=>{
     res.render("addTodo.hbs",{
+        name:req.params.name
+    });
+});
+
+app.get("/user/:user/show",(req,res)=>{
+    res.render("showTodo.hbs",{
         name:req.params.name
     });
 });
