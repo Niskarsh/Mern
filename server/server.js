@@ -4,7 +4,7 @@ var {users} = require("./models/users");
 const hbs = require("hbs");
 var express = require("express");
 var app = express();
-var $ = require("jquery");
+
 
 
 // Handlebars viewing engine
@@ -20,7 +20,8 @@ app.post("/signin",(req,res)=>{
     users.findOne({"username" : (req.body.username).toString()}).then(function(user){
         if(!(user===null)){
             if(user.password===req.body.password){
-                var u = "/user/"+user.username;       
+                var u = "/user/"+user.username; 
+                console.log(u);      
                 return res.redirect(u);
             }
             alert("Incorrect password");
@@ -62,15 +63,24 @@ app.get("/signup",(req,res)=>{
 });
 
 app.get("/user/:user",(req,res)=>{
+    // if(req.params.user==="Niskarsh"){
+    //     return;
+    // }
     console.log("Get fired user "+req.params.user);
     res.render("user_page.hbs",{
     name : req.params.user
     });
 });
-``
+
+app.get("/user/:user/add",(req,res)=>{
+    res.render("addTodo.hbs",{
+        name:req.params.name
+    });
+});
+
 
 
 
 app.listen(3000,()=>{
-    console.log("Started listening");
+    console.log("Started listening on 3000");
 });

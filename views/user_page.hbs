@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{name}}'s TODOS</title>
 </head>
 <body>
+    <script type="text/javascript" src="/scripts/jquery.js"></script>
+
+    <script type="text/javascript" src="/scripts/user.js"></script>
     <h3>Hello {{name}}</h3>
     <div>
-        <ul>
-            <li id="add">Add Todo</li>
-            <li id="show">Show all Todo</li>
+        
+            <button id="add">Add Todo</button>
+            <button id="show">Show all Todo</button>
             {{!-- <li>Add Todo</li> --}}
-        </ul>
+        
     </div>
 
 </body>
