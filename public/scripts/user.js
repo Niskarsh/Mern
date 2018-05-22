@@ -19,4 +19,10 @@ document.addEventListener("DOMContentLoaded",function(){
             window.location.href=u
         );
     });
+    $("#logout").click(()=>{
+
+        $.get("/").done((event)=>{
+            window.location.href="/";
+        });
+    });
 });

@@ -5,6 +5,7 @@ var signinPost = require("./routes/signin_post.js");
 var signupPost = require("./routes/signup_post.js");
 var addTodoPost = require("./routes/addTodo_post.js");
 var app = require("./common.js");
+var port = process.env.PORT||3002;
 
 app.post("/signin",(req,res)=>{
     signinPost(req.body.username,req.body.password,res);   
@@ -20,10 +21,19 @@ app.post("/user/:user/add",(req,res)=>{
     addTodoPost(req.params.user, req.body.task, req.body.cstatus, req.body.p,res);
 });
 
+app.post("/user/:user/show",(req,res)=>{
+    console.log("Fired");
+    todos.find().then((user)=>{
+        res.json(JSON.stringify(user));
+    },()=>{}).catch();
+});
+
 
 // GET Requests
 app.get('/', function (req, res) {
+  
     res.render('home.hbs');
+    
   });
   
 app.get("/signin",(req,res)=>{
@@ -43,19 +53,20 @@ app.get("/user/:user",(req,res)=>{
 
 app.get("/user/:user/add",(req,res)=>{
     res.render("addTodo.hbs",{
-        name:req.params.name
+        name:req.params.user
     });
 });
 
 app.get("/user/:user/show",(req,res)=>{
     res.render("showTodo.hbs",{
-        name:req.params.name
+        name:req.params.user,
+        user:null
     });
 });
 
 
 
 
-app.listen(3000,()=>{
-    console.log("Started listening on 3000");
+app.listen(port,()=>{
+    console.log('Started listening on'+ port);
 });

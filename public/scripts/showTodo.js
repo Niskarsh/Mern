@@ -1,16 +1,28 @@
-document.addEventListener("DOMContentLoaded",()=>{
-    
-        var task= $("#task").get("0").value;
-        var cstatus= $("#cstatus").get("0").value;
-        var p=$("#prior").get("0").value;
-        $("back").click();
-
-        $.post(event.target.baseURI,{task:task,cstatus:cstatus,p:p}).done(function(){
+document.addEventListener("DOMContentLoaded",(event)=>{
+    $.post(event.target.baseURI,{}).done((user)=>{
+        // for(var i=0;)
+        console.log("from here "+user);
+        user= JSON.parse(user);
+        $.each(user,(i,item)=>{
+            $("#table tbody").append(
+                "<tr>"+
+                "<td>"+item.task+"</td>"+
+                "<td>"+item.completeStatus+"</td>"+
+                "<td>"+item.priority+"</td>"+
+                "</tr>"
+            );
+        });
+        
+    });
+        
+        $("#back").click((event)=>{
             var u = event.target.baseURI;
             var l=u.length;
-            u=u.substring(0,l-3);
+            u=u.substring(0,l-4);
             window.location.href=u;
             console.log(u);
         });
+
+        
     
 });
