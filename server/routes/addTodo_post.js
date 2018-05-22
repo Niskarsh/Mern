@@ -3,7 +3,8 @@ var a =function(user,task,cstatus,p,res){
     var todo= new todos({
         task:task,
         completeStatus: cstatus,
-        priority: p
+        priority: p,
+        user:user
 
     });
     todo.save().then((doc)=>{

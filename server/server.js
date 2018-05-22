@@ -23,7 +23,7 @@ app.post("/user/:user/add",(req,res)=>{
 
 app.post("/user/:user/show",(req,res)=>{
     console.log("Fired");
-    todos.find().then((user)=>{
+    todos.find({"user":(req.params.user).toString()}).then((user)=>{
         res.json(JSON.stringify(user));
     },()=>{}).catch();
 });
