@@ -3,7 +3,7 @@ var a =function(username,password,res){
         users.findOne({"username" : (username).toString()}).then(function(user){
         if(!(user===null)){
             if(user.password===password){
-                var u = "/user/dashboard"; 
+                var u = "/user/"+user.username; 
                 console.log(u);      
                 return res.redirect(u);
             }

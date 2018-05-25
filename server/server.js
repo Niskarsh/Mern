@@ -44,10 +44,10 @@ app.get("/signup",(req,res)=>{
     res.render("signup.hbs");
 });
 
-app.get("/user/dashboard",(req,res)=>{
+app.get("/user/:user",(req,res)=>{
     console.log("New "+req);
     res.render("user_page.hbs",{
-    name : req.username
+    name : req.params.user
     });
 });
 

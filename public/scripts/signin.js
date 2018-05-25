@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",function(){
                                 
                 if(!(data===null)){
                     console.log("Signin before get");
-                    $.get("/user/dashboard",{username:username}).done(window.location.href='/user/dashboard');
+                    $.get("/user/"+username,{username:username}).done(window.location.href='/user/'+username);
                     
                 }
             }
