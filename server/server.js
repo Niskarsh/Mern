@@ -24,6 +24,7 @@ app.post("/user/:user/add",(req,res)=>{
 app.post("/user/:user/show",(req,res)=>{
     console.log("Fired");
     todos.find({"user":(req.params.user).toString()}).then((user)=>{
+        console.log(user);
         res.json(JSON.stringify(user));
     },()=>{}).catch();
 });
@@ -58,10 +59,16 @@ app.get("/user/:user/add",(req,res)=>{
 });
 
 app.get("/user/:user/show",(req,res)=>{
-    res.render("showTodo.hbs",{
-        name:req.params.user,
+    // res.render("showTodo.hbs",{
+    //     name:req.params.user,
         
-    });
+    // });
+
+    console.log("Fired");
+    todos.find({"user":(req.params.user).toString()}).then((user)=>{
+        console.log(user);
+        res.json(JSON.stringify(user));
+    },()=>{}).catch();
 });
 
 
