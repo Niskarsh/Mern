@@ -4,9 +4,12 @@ document.addEventListener("DOMContentLoaded",function(){
         var password = $("#password").get("0").value;
         console.log("in sign in username "+username+" password "+password);
         $.post("/signin",{username:username,password:password}).done(
-            function(data){                
+            function(data){
+                                
                 if(!(data===null)){
-                    window.location.href='/user/'+username;
+                    console.log("Signin before get");
+                    $.get("/user/dashboard",{username:username}).done(window.location.href='/user/dashboard');
+                    
                 }
             }
         );

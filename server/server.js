@@ -44,10 +44,10 @@ app.get("/signup",(req,res)=>{
     res.render("signup.hbs");
 });
 
-app.get("/user/:user",(req,res)=>{
-    console.log("Get fired user "+req.params.user);
+app.get("/user/dashboard",(req,res)=>{
+    console.log("New "+req);
     res.render("user_page.hbs",{
-    name : req.params.user
+    name : req.username
     });
 });
 
@@ -60,7 +60,7 @@ app.get("/user/:user/add",(req,res)=>{
 app.get("/user/:user/show",(req,res)=>{
     res.render("showTodo.hbs",{
         name:req.params.user,
-        user:null
+        
     });
 });
 
